@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Home | Minimal Blog">
+  <section style="margin-bottom: 3.5rem;">
+    <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 0.8rem; letter-spacing: -0.5px;">
+      Writing on tech, code & design.
+    </h1>
+    <p style="color: var(--muted); font-size: 1.1rem;">
+      Namaste! Yeh ek simple aur fast minimal blog hai jo Astro JS aur Markdown se bana hai.
+    </p>
+  </section>
+
+  <section>
+    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.5rem;">
+      <h2 style="font-size: 1.3rem;">Recent Posts</h2>
+      <a href={`${base}blog`} style="color: var(--muted); text-decoration: none; font-size: 0.9rem;">View all &rarr;</a>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 1.8rem;">
+      {posts.map((post) => (
+        <article>
+          <span style="font-size: 0.85rem; color: var(--muted);">
+            {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+          </span>
+          <h3 style="margin: 0.3rem 0;">
+            <a href={`${base}blog/${post.slug}`} style="text-decoration: none; color: var(--text);">
+              {post.data.title}
+            </a>
+          </h3>
+          <p style="color: var(--muted); font-size: 0.95rem;">{post.data.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
