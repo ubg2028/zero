@@ -15,23 +15,42 @@ const { Content } = await post.render();
 const base = import.meta.env.BASE_URL;
 ---
 
-<BaseLayout title={`${post.data.title} | Minimal Blog`} description={post.data.description}>
-  <article>
-    <a href={`${base}blog`} style="color: var(--muted); text-decoration: none; font-size: 0.9rem;">
-      &larr; Back to all posts
+<BaseLayout title={`${post.data.title} | CozyBerry`} description={post.data.description}>
+  <article class="max-w-2xl mx-auto bg-white/95 border border-pink-100 rounded-3xl p-6 sm:p-10 shadow-sm mt-4">
+    <a href={`${base}blog`} class="text-xs font-extrabold text-pastel-rose hover:underline mb-6 inline-block">
+      &larr; Back to all diaries
     </a>
-    
-    <header style="margin-top: 1.5rem; margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem;">
-      <h1 style="font-size: 2.4rem; line-height: 1.25; margin-bottom: 0.8rem; letter-spacing: -0.5px;">
+
+    <header class="text-center mb-8">
+      <span class="bg-pastel-pink text-pastel-rose text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
+        {post.data.emoji} {post.data.category}
+      </span>
+      <h1 class="font-display font-black text-3xl sm:text-4xl text-pastel-dark mt-4 mb-3 leading-snug">
         {post.data.title}
       </h1>
-      <p style="color: var(--muted); font-size: 0.9rem;">
-        Published on {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} · By {post.data.author}
+      <p class="text-pastel-soft text-xs sm:text-sm font-semibold">
+        Written with love by <strong class="text-pastel-dark">{post.data.author}</strong> on {post.data.pubDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
       </p>
     </header>
 
-    <div class="prose">
+    {post.data.image && (
+      <div class="rounded-2xl overflow-hidden mb-8 max-h-96 shadow-sm">
+        <img src={post.data.image} alt={post.data.title} class="w-full h-full object-cover" />
+      </div>
+    )}
+
+    <!-- Tailwind Typography Styled Markdown Content -->
+    <div class="prose prose-pink max-w-none prose-headings:font-display prose-headings:font-bold prose-headings:text-pastel-dark prose-p:text-pastel-soft prose-p:leading-relaxed prose-code:bg-pastel-pink/50 prose-code:text-pastel-rose prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-pre:bg-pastel-dark prose-pre:rounded-2xl">
       <Content />
+    </div>
+
+    <!-- Author Bio Footnote -->
+    <div class="mt-12 pt-6 border-t border-pink-100 flex items-center gap-4 bg-pastel-blush/60 p-4 rounded-2xl">
+      <div class="text-3xl bg-white p-2 rounded-full shadow-sm">🍓</div>
+      <div>
+        <h4 class="font-display font-bold text-sm text-pastel-dark">Written by {post.data.author}</h4>
+        <p class="text-xs text-pastel-soft mt-0.5">Lover of iced matcha, cozy books, aesthetic designs and calm coding sessions.</p>
+      </div>
     </div>
   </article>
 </BaseLayout>
