@@ -6,7 +6,11 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string(),
     pubDate: z.coerce.date(),
-    author: z.string().default('Anonymous'),
+    author: z.string().default('Cozy Berry 🍓'),
+    category: z.string().default('Lifestyle 🎀'),
+    emoji: z.string().default('✨'),
+    image: z.string().optional(),
+    featured: z.boolean().default(false),
   }),
 });
 
