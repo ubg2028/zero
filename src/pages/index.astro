@@ -1,44 +1,81 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
 import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('blog'))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
-
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const featured = posts.find(p => p.data.featured) || posts[0];
+const recent = posts.filter(p => p.slug !== featured.slug);
 const base = import.meta.env.BASE_URL;
 ---
 
-<BaseLayout title="Home | Minimal Blog">
-  <section style="margin-bottom: 3.5rem;">
-    <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 0.8rem; letter-spacing: -0.5px;">
-      Writing on tech, code & design.
+<BaseLayout title="CozyBerry | Aesthetic & Mindful Blog 🌸">
+  <!-- Cute Hero Banner -->
+  <section class="text-center py-10 sm:py-16">
+    <div class="inline-flex items-center gap-2 bg-pastel-pink text-pastel-rose font-extrabold text-xs px-4 py-1.5 rounded-full mb-4 shadow-sm">
+      ✨ Welcome to my cozy corner
+    </div>
+    <h1 class="font-display font-black text-4xl sm:text-5xl text-pastel-dark tracking-tight max-w-2xl mx-auto leading-tight">
+      Stories on slow living, aesthetics & everyday joy 🌷
     </h1>
-    <p style="color: var(--muted); font-size: 1.1rem;">
-      Namaste! Yeh ek simple aur fast minimal blog hai jo Astro JS aur Markdown se bana hai.
+    <p class="text-pastel-soft text-base sm:text-lg max-w-xl mx-auto mt-4">
+      A calm space where I document cute café recipes, aesthetic setups, and coding adventures.
     </p>
   </section>
 
+  <!-- Featured Post Big Card -->
+  {featured && (
+    <section class="mb-14">
+      <div class="bg-white/95 border border-pink-100 rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-xl hover:shadow-pink-100/50 transition grid md:grid-cols-2 gap-8 items-center">
+        {featured.data.image && (
+          <a href={`${base}blog/${featured.slug}`} class="rounded-2xl overflow-hidden h-64 sm:h-72 block">
+            <img src={featured.data.image} alt={featured.data.title} class="w-full h-full object-cover hover:scale-105 transition duration-500" />
+          </a>
+        )}
+        <div>
+          <span class="bg-pastel-lavender text-pastel-purple text-xs font-black px-3.5 py-1 rounded-full uppercase tracking-wider">
+            ⭐ Editor's Favorite
+          </span>
+          <h2 class="font-display font-black text-2xl sm:text-3xl text-pastel-dark mt-3 mb-3 leading-snug">
+            <a href={`${base}blog/${featured.slug}`} class="hover:text-pastel-rose transition">{featured.data.title}</a>
+          </h2>
+          <p class="text-pastel-soft text-sm sm:text-base leading-relaxed mb-6">
+            {featured.data.description}
+          </p>
+          <a href={`${base}blog/${featured.slug}`} class="inline-flex items-center gap-2 bg-pastel-dark text-white font-bold text-sm px-6 py-2.5 rounded-full hover:bg-pastel-rose transition shadow-md">
+            Read Article 🌸
+          </a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Recent Grid -->
   <section>
-    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.5rem;">
-      <h2 style="font-size: 1.3rem;">Recent Posts</h2>
-      <a href={`${base}blog`} style="color: var(--muted); text-decoration: none; font-size: 0.9rem;">View all &rarr;</a>
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="font-display font-extrabold text-2xl text-pastel-dark">Latest Diaries 🎀</h2>
+      <a href={`${base}blog`} class="text-sm font-bold text-pastel-rose hover:underline">See all stories &rarr;</a>
     </div>
 
-    <div style="display: flex; flex-direction: column; gap: 1.8rem;">
-      {posts.map((post) => (
-        <article>
-          <span style="font-size: 0.85rem; color: var(--muted);">
-            {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
-          </span>
-          <h3 style="margin: 0.3rem 0;">
-            <a href={`${base}blog/${post.slug}`} style="text-decoration: none; color: var(--text);">
-              {post.data.title}
-            </a>
-          </h3>
-          <p style="color: var(--muted); font-size: 0.95rem;">{post.data.description}</p>
-        </article>
+    <div class="grid sm:grid-cols-2 gap-6">
+      {recent.map(post => (
+        <PostCard post={post} />
       ))}
     </div>
+  </section>
+
+  <!-- Newsletter Cute Box -->
+  <section class="mt-16 bg-gradient-to-r from-pastel-pink/60 via-pastel-lavender/50 to-pastel-peach/60 border border-pink-200/50 p-8 sm:p-12 rounded-3xl text-center shadow-sm">
+    <div class="text-3xl mb-2">💌</div>
+    <h3 class="font-display font-black text-2xl text-pastel-dark">Join the Cozy Club</h3>
+    <p class="text-pastel-soft text-sm mt-1 mb-6 max-w-md mx-auto">Get gentle weekly reminders, cute wallpaper drops & aesthetic story updates directly to your inbox.</p>
+    <form class="flex flex-col sm:flex-row gap-2 max-w-md mx-auto" onsubmit="event.preventDefault(); alert('Subscribed to Cozy Club! 🌸');">
+      <input type="email" placeholder="Your cozy email..." required class="bg-white border border-pink-200 rounded-full px-5 py-3 text-sm flex-grow outline-none focus:ring-2 focus:ring-pastel-rose/50" />
+      <button type="submit" class="bg-pastel-rose text-white font-extrabold text-sm px-6 py-3 rounded-full hover:opacity-90 transition shadow-md shadow-pink-200">
+        Subscribe 💖
+      </button>
+    </form>
   </section>
 </BaseLayout>
