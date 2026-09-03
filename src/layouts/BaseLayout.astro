@@ -3,8 +3,7 @@ interface Props {
   title: string;
   description?: string;
 }
-
-const { title, description = "A minimal Astro JS blog" } = Astro.props;
+const { title, description = "A cute & cozy personal aesthetic blog" } = Astro.props;
 const base = import.meta.env.BASE_URL;
 ---
 
@@ -15,111 +14,48 @@ const base = import.meta.env.BASE_URL;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <style is:global>
-      :root {
-        --bg: #fafafa;
-        --text: #1a1a1a;
-        --muted: #666;
-        --border: #e5e5e5;
-        --accent: #000;
-        --code-bg: #f0f0f0;
-      }
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        background-color: var(--bg);
-        color: var(--text);
-        line-height: 1.7;
-        padding: 2rem 1rem;
-      }
-      .container {
-        max-width: 680px;
-        margin: 0 auto;
-      }
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-bottom: 2rem;
-        margin-bottom: 3rem;
-        border-bottom: 1px solid var(--border);
-      }
-      .logo {
-        font-weight: 700;
-        font-size: 1.2rem;
-        text-decoration: none;
-        color: var(--text);
-        letter-spacing: -0.5px;
-      }
-      nav a {
-        margin-left: 1.5rem;
-        text-decoration: none;
-        color: var(--muted);
-        font-size: 0.95rem;
-        transition: color 0.2s ease;
-      }
-      nav a:hover {
-        color: var(--accent);
-      }
-      footer {
-        margin-top: 4rem;
-        padding-top: 2rem;
-        border-top: 1px solid var(--border);
-        text-align: center;
-        font-size: 0.85rem;
-        color: var(--muted);
-      }
-      /* Markdown Content Styling */
-      .prose h1, .prose h2, .prose h3 {
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-        letter-spacing: -0.5px;
-      }
-      .prose p {
-        margin-bottom: 1.25rem;
-      }
-      .prose ul, .prose ol {
-        margin-left: 1.5rem;
-        margin-bottom: 1.25rem;
-      }
-      .prose pre {
-        background: var(--code-bg);
-        padding: 1rem;
-        border-radius: 6px;
-        overflow-x: auto;
-        margin-bottom: 1.25rem;
-      }
-      .prose code {
-        font-family: monospace;
-        background: var(--code-bg);
-        padding: 0.2rem 0.4rem;
-        border-radius: 4px;
-        font-size: 0.9em;
-      }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
   </head>
-  <body>
-    <div class="container">
-      <header>
-        <a href={base} class="logo">MINIMAL.</a>
-        <nav>
-          <a href={base}>Home</a>
-          <a href={`${base}blog`}>Blog</a>
-          <a href={`${base}about`}>About</a>
-        </nav>
-      </header>
+  <body class="bg-pastel-cream text-pastel-dark font-sans selection:bg-pastel-pink selection:text-pastel-rose min-h-screen flex flex-col relative overflow-x-hidden">
+    
+    <!-- Aesthetic Floating Blobs Background -->
+    <div class="fixed top-[-10%] left-[-5%] w-96 h-96 bg-pastel-pink/40 rounded-full blur-3xl pointer-events-none -z-10"></div>
+    <div class="fixed top-[30%] right-[-10%] w-[28rem] h-[28rem] bg-pastel-lavender/40 rounded-full blur-3xl pointer-events-none -z-10"></div>
+    <div class="fixed bottom-[-10%] left-[20%] w-80 h-80 bg-pastel-peach/40 rounded-full blur-3xl pointer-events-none -z-10"></div>
 
-      <main>
-        <slot />
-      </main>
+    <!-- Cute Navbar -->
+    <header class="sticky top-4 z-50 max-w-4xl mx-auto w-full px-4 mb-6">
+      <nav class="bg-white/80 backdrop-blur-md border border-pink-100 shadow-sm shadow-pink-100/50 rounded-full px-6 py-3.5 flex justify-between items-center">
+        <a href={base} class="font-display font-black text-xl text-pastel-dark tracking-tight flex items-center gap-2 hover:scale-105 transition">
+          <span class="bg-pastel-pink p-1.5 rounded-full text-sm">🌸</span> CozyBerry.
+        </a>
+        <div class="flex items-center gap-6 font-bold text-sm text-pastel-soft">
+          <a href={base} class="hover:text-pastel-rose transition">Home</a>
+          <a href={`${base}blog`} class="hover:text-pastel-rose transition">Stories</a>
+          <a href={`${base}about`} class="hover:text-pastel-rose transition">About</a>
+          <a href={`${base}contact`} class="hover:text-pastel-rose transition">Contact</a>
+          <a href={`${base}blog`} class="bg-pastel-pink text-pastel-rose px-4 py-1.5 rounded-full font-extrabold hover:bg-pastel-rose hover:text-white transition shadow-sm">
+            Join 💌
+          </a>
+        </div>
+      </nav>
+    </header>
 
-      <footer>
-        <p>© {new Date().getFullYear()} Minimal Blog. Built with Astro.</p>
-      </footer>
-    </div>
+    <!-- Main Content Container -->
+    <main class="max-w-4xl mx-auto w-full px-4 flex-grow">
+      <slot />
+    </main>
+
+    <!-- Cute Footer -->
+    <footer class="mt-20 border-t border-pink-100/80 bg-white/50 backdrop-blur-sm py-10">
+      <div class="max-w-4xl mx-auto px-4 text-center">
+        <div class="text-2xl mb-2">🎀 🍵 🧸</div>
+        <p class="font-display font-bold text-pastel-dark text-lg">CozyBerry Minimal Blog</p>
+        <p class="text-pastel-soft text-sm mt-1">Made with lots of matcha, peaceful moments & Astro JS</p>
+        <p class="text-xs text-pastel-soft/70 mt-4">© {new Date().getFullYear()} CozyBerry • Stay Lovely ✨</p>
+      </div>
+    </footer>
   </body>
 </html>
