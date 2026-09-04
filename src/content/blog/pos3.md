@@ -209,6 +209,7 @@ Ce temps est révolu :
 * **Les banques réduisent drastiquement leurs agences :** Elles recrutent aujourd'hui des ingénieurs informatiques et des experts cybersécurité plutôt que des guichetiers.
 * **Les distributeurs automatiques (DAB) et agences géantes disparaissent :** Les institutions financières réduisent leurs surfaces au mètre carré pour ne conserver que de petites unités numériques.
 
+
 Même les géants bancaires historiques détiennent des portefeuilles immobiliers physiques qui sont devenus des charges lourdes par rapport à leur valorisation boursière.
 
 ### Facteur 5 : L'Invasion des Méga-Conglomérats et des Entrepôts Intelligents 🏬🚚
